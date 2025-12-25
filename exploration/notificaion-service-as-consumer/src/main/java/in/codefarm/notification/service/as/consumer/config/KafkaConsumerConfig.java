@@ -10,6 +10,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +27,12 @@ public class KafkaConsumerConfig {
         
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.springframework.kafka.support.serialization.JsonDeserializer");
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
         
         // JSON deserializer configuration
         configProps.put("spring.json.trusted.packages", "*");
-        configProps.put("spring.json.type.mapping", "orderPlacedEvent:in.codefarm.notification.service.as.consumer.event.OrderPlacedEvent");
+        configProps.put("spring.json.trusted.packages", "*");
+        configProps.put("spring.json.type.mapping", "OrderPlacedEvent:in.codefarm.notification.service.as.consumer.event.OrderPlacedEvent");
         
         // Auto offset reset
         configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");

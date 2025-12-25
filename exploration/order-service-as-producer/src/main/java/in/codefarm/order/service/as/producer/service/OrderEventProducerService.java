@@ -6,6 +6,7 @@ import in.codefarm.order.service.as.producer.repository.OrderRepository;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
@@ -27,7 +28,8 @@ public class OrderEventProducerService {
     
     private static final Logger log = LoggerFactory.getLogger(OrderEventProducerService.class);
     private static final String TOPIC_NAME = "orders";
-    
+
+//    @Qualifier("kafkaTemplate1")
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
     private final OrderRepository orderRepository;
     
@@ -145,6 +147,7 @@ public class OrderEventProducerService {
     }
     
     // Scenario 4: Send to Specific Partition
+    //todo how to get the parittion numbers from the topic from producer client
     @Transactional
     public OrderEntity sendToPartition(OrderPlacedEvent event, int partition) {
         log.info("=== Send to Partition {}: Sending order event {} ===", partition, event.orderId());
@@ -173,7 +176,7 @@ public class OrderEventProducerService {
         return orderEntity;
     }
     
-    // Scenario 5: Send with Custom Headers
+    // Scenario 5: Send with Custom Headers, this is the recommended way to use from my side
     @Transactional
     public OrderEntity sendWithHeaders(OrderPlacedEvent event) {
         log.info("=== Send with Headers: Sending order event {} ===", event.orderId());

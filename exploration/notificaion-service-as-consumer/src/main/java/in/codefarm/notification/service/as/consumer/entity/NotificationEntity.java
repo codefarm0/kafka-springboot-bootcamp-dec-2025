@@ -20,7 +20,9 @@ public class NotificationEntity {
     private LocalDateTime createdAt;
     
     // Consumer metadata
+    @Column(name = "kafka_partition")
     private Integer partition;
+    @Column(name = "msg_offset")
     private Long offset;
     private String consumerGroup;
     private String consumerMethod;  // Which consumer method processed this

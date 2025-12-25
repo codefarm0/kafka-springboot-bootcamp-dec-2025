@@ -28,11 +28,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 1: Auto-Commit Consumer (Default)
-    @KafkaListener(
-        topics = "orders",
-        groupId = CONSUMER_GROUP,
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = CONSUMER_GROUP,
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeAutoCommit(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_KEY) String key,
@@ -115,11 +115,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 3: Batch Consumption
-    @KafkaListener(
-        topics = "orders",
-        groupId = "notification-service-batch-group",
-        containerFactory = "batchKafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = "notification-service-batch-group",
+//        containerFactory = "batchKafkaListenerContainerFactory"
+//    )
     public void consumeBatch(
         @Payload List<OrderPlacedEvent> events,
         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
@@ -160,14 +160,14 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 4: Consume from Specific Partitions
-    @KafkaListener(
-        topicPartitions = @TopicPartition(
-            topic = "orders",
-            partitions = {"0", "1"}  // Only consume from partitions 0 and 1
-        ),
-        groupId = "notification-service-specific-partition-group",
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topicPartitions = @TopicPartition(
+//            topic = "orders",
+//            partitions = {"0", "1"}  // Only consume from partitions 0 and 1
+//        ),
+//        groupId = "notification-service-specific-partition-group",
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeFromSpecificPartitions(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
@@ -197,11 +197,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 5: Reading Headers from Messages
-    @KafkaListener(
-        topics = "orders",
-        groupId = "notification-service-headers-group",
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = "notification-service-headers-group",
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeWithHeaders(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_KEY) String key,
@@ -239,11 +239,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 5b: Read All Headers
-    @KafkaListener(
-        topics = "orders",
-        groupId = "notification-service-all-headers-group",
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = "notification-service-all-headers-group",
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeWithAllHeaders(
         @Payload OrderPlacedEvent event,
         @Header Map<String, Object> headers
@@ -276,11 +276,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 6: Concurrent Consumers
-    @KafkaListener(
-        topics = "orders",
-        groupId = "notification-service-concurrent-group",
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = "notification-service-concurrent-group",
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeConcurrently(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition
@@ -311,11 +311,11 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 7: Idempotent Consumer
-    @KafkaListener(
-        topics = "orders",
-        groupId = "notification-service-idempotent-group",
-        containerFactory = "kafkaListenerContainerFactory"
-    )
+//    @KafkaListener(
+//        topics = "orders",
+//        groupId = "notification-service-idempotent-group",
+//        containerFactory = "kafkaListenerContainerFactory"
+//    )
     public void consumeIdempotently(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_KEY) String key,
