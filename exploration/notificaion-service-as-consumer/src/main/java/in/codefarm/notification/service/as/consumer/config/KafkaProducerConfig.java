@@ -1,6 +1,6 @@
-package in.codefarm.order.service.as.producer.config;
+package in.codefarm.notification.service.as.consumer.config;
 
-import in.codefarm.order.service.as.producer.event.OrderPlacedEvent;
+import in.codefarm.notification.service.as.consumer.event.OrderPlacedEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,9 +45,7 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
         configProps.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
         configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);
-        // Add interceptor
-        configProps.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG,
-                Collections.singletonList(MyProducerInterceptor.class));
+
         configProps.put("spring.json.add.type.headers", false);
         return new DefaultKafkaProducerFactory<>(configProps);
     }

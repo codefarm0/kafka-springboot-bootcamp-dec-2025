@@ -2,6 +2,8 @@ package in.codefarm.notification.service.as.consumer.service;
 
 import in.codefarm.notification.service.as.consumer.entity.NotificationEntity;
 import in.codefarm.notification.service.as.consumer.event.OrderPlacedEvent;
+import in.codefarm.notification.service.as.consumer.exception.OrderIsInvalid;
+import in.codefarm.notification.service.as.consumer.exception.TransientDownstreamException;
 import in.codefarm.notification.service.as.consumer.repository.NotificationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,12 +54,12 @@ public class NotificationService {
         return saved;
     }
     
-    public void sendEmailNotification(OrderPlacedEvent event) {
+    public void sendEmailNotification(OrderPlacedEvent event) throws OrderIsInvalid {
         log.info("Sending email notification to customer: {}", event.customerId());
         log.info("Email: Your order {} for ${} has been placed successfully!", 
             event.orderId(), 
             event.totalAmount());
-        
+//        sendNotication(event.orderId(), event.customerId());
         // In real system: call email service
         // emailService.sendConfirmationEmail(event.customerId(), event.orderId(), event.totalAmount());
     }
@@ -75,7 +77,25 @@ public class NotificationService {
         
         // In real system: call push notification service
     }
-    
+    private void sendNotication(String orderId, String userId) throws OrderIsInvalid {
+        // Simulate an unreliable downstream system ~30% of the time
+        if (Math.random() < 0.3) {
+            log.warn("Simulation order failure due to service issue for order + {}", orderId);
+            throw new TransientDownstreamException("Simulation order failure due to service issue for order "+ orderId);
+        }
+
+        if(Math.random() < 0.6){
+            log.warn("Simulation order failure due to business rule violation for order + {}", orderId);
+            throw new OrderIsInvalid("Simulation order failure due to business rule violation for order " + orderId);
+        }
+        // Simulate some processing time
+        try {
+            Thread.sleep(500); // 0.5s
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        log.info("sent notification for user {}", userId);
+    }
     public java.util.Optional<NotificationEntity> findByOrderId(String orderId) {
         return notificationRepository.findByOrderId(orderId);
     }

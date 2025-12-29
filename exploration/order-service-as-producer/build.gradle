@@ -33,3 +33,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// this is to stop WARN that kafka gives while doing compression(snappy)
+bootRun {
+	jvmArgs("--enable-native-access=ALL-UNNAMED")
+}
+

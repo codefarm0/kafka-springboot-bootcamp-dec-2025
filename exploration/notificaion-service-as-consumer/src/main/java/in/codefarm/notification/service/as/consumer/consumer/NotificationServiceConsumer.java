@@ -1,11 +1,17 @@
 package in.codefarm.notification.service.as.consumer.consumer;
 
 import in.codefarm.notification.service.as.consumer.event.OrderPlacedEvent;
+import in.codefarm.notification.service.as.consumer.exception.OrderIsInvalid;
+import in.codefarm.notification.service.as.consumer.exception.TransientDownstreamException;
 import in.codefarm.notification.service.as.consumer.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.annotation.BackOff;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.annotation.TopicPartition;
+import org.springframework.kafka.retrytopic.DltStrategy;
+import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -33,12 +39,20 @@ public class NotificationServiceConsumer {
 //        groupId = CONSUMER_GROUP,
 //        containerFactory = "kafkaListenerContainerFactory"
 //    )
+    // Add @RetryableTopic annotation above existing @KafkaListener
+//    @RetryableTopic(
+//            attempts = "3",  // Retry 3 times
+//            backOff = @BackOff(delay = 1000, multiplier = 2.0),  // 1s, 2s, 4s delays
+//            topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE,
+//            dltStrategy = DltStrategy.FAIL_ON_ERROR,
+//            include = {RuntimeException.class}  // Retry on runtime exceptions
+//    )
     public void consumeAutoCommit(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_KEY) String key,
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
         @Header(KafkaHeaders.OFFSET) long offset
-    ) {
+    ) throws Throwable{
         log.info("=== Auto-Commit Consumer: Received OrderPlacedEvent ===");
         log.info("Order ID: {}, Customer: {}, Partition: {}, Offset: {}", 
             event.orderId(), event.customerId(), partition, offset);
@@ -80,7 +94,7 @@ public class NotificationServiceConsumer {
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
         @Header(KafkaHeaders.OFFSET) long offset,
         Acknowledgment acknowledgment
-    ) {
+    ) throws Throwable{
         log.info("=== Manual Commit Consumer: Received OrderPlacedEvent ===");
         log.info("Order ID: {}, Customer: {}, Partition: {}, Offset: {}", 
             event.orderId(), event.customerId(), partition, offset);
@@ -124,7 +138,7 @@ public class NotificationServiceConsumer {
         @Payload List<OrderPlacedEvent> events,
         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
         @Header(KafkaHeaders.OFFSET) List<Long> offsets
-    ) {
+    ) throws Throwable{
         log.info("=== Batch Consumer: Received batch of {} orders ===", events.size());
         
         for (int i = 0; i < events.size(); i++) {
@@ -160,19 +174,19 @@ public class NotificationServiceConsumer {
     }
     
     // Scenario 4: Consume from Specific Partitions
-//    @KafkaListener(
-//        topicPartitions = @TopicPartition(
-//            topic = "orders",
-//            partitions = {"0", "1"}  // Only consume from partitions 0 and 1
-//        ),
-//        groupId = "notification-service-specific-partition-group",
-//        containerFactory = "kafkaListenerContainerFactory"
-//    )
+    @KafkaListener(
+        topicPartitions = @TopicPartition(
+            topic = "orders",
+            partitions = {"3"} //US  // Only consume from partitions 0 and 1
+        ),
+        groupId = "notification-service-specific-partition-group",
+        containerFactory = "kafkaListenerContainerFactory"
+    )
     public void consumeFromSpecificPartitions(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition,
         @Header(KafkaHeaders.OFFSET) long offset
-    ) {
+    ) throws Throwable{
         log.info("=== Specific Partition Consumer: Received from partition {} - Order: {} ===",
             partition, event.orderId());
         
@@ -210,7 +224,7 @@ public class NotificationServiceConsumer {
         @Header(value = "correlation-id", required = false) String correlationId,
         @Header(value = "source", required = false) String source,
         @Header(value = "event-version", required = false) String eventVersion
-    ) {
+    ) throws Throwable{
         log.info("=== Headers Consumer: Received OrderPlacedEvent: {} ===", event.orderId());
         log.info("=== Headers Consumer: Correlation ID: {}, Source: {}, Event Version: {} ===",
             correlationId, source, eventVersion);
@@ -247,7 +261,7 @@ public class NotificationServiceConsumer {
     public void consumeWithAllHeaders(
         @Payload OrderPlacedEvent event,
         @Header Map<String, Object> headers
-    ) {
+    ) throws Throwable{
         log.info("=== All Headers Consumer: Received OrderPlacedEvent: {} ===", event.orderId());
         log.info("=== All Headers Consumer: All headers: {} ===", headers);
         
@@ -284,7 +298,7 @@ public class NotificationServiceConsumer {
     public void consumeConcurrently(
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_PARTITION) int partition
-    ) {
+    ) throws Throwable{
         log.info("=== Concurrent Consumer: Thread: {}, Partition: {}, Order: {} ===",
             Thread.currentThread().getName(),
             partition,
@@ -320,7 +334,7 @@ public class NotificationServiceConsumer {
         @Payload OrderPlacedEvent event,
         @Header(KafkaHeaders.RECEIVED_KEY) String key,
         @Header(KafkaHeaders.OFFSET) long offset
-    ) {
+    ) throws Throwable{
         log.info("=== Idempotent Consumer: Received OrderPlacedEvent: {} ===", event.orderId());
         
         // Idempotency check - check if notification already sent for this order
