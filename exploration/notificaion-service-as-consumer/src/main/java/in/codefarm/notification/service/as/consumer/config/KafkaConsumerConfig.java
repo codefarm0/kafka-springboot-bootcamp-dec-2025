@@ -130,5 +130,38 @@ public class KafkaConsumerConfig {
         factory.setConcurrency(3);
         return factory;
     }
+
+    // Consumer factory for payments (generic Object to handle PaymentProcessedEvent)
+    @Bean
+    public ConsumerFactory<String, Object> paymentConsumerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.springframework.kafka.support.serialization.JsonDeserializer");
+        configProps.put("spring.json.trusted.packages", "*");
+        configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        configProps.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 30000);
+        configProps.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, 3000);
+        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 500);
+        configProps.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 300000);
+        configProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        configProps.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "notification-service-payment-group");
+        
+        return new DefaultKafkaConsumerFactory<>(configProps);
+    }
+    
+    // Container factory for payments
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, Object> paymentKafkaListenerContainerFactory(
+        ConsumerFactory<String, Object> paymentConsumerFactory
+    ) {
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory = 
+            new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(paymentConsumerFactory);
+        factory.setConcurrency(2);
+        return factory;
+    }
 }
 
