@@ -1,0 +1,99 @@
+services:
+  broker1:
+    image: apache/kafka:4.1.0
+    container_name: kafka-broker1
+    hostname: broker1
+    ports:
+      - "9092:9092"
+    volumes:
+      - broker1-data:/var/lib/kafka/data
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+
+      # Listeners
+      KAFKA_LISTENERS: >
+        INTERNAL://0.0.0.0:29092,
+        EXTERNAL://0.0.0.0:9092,
+        CONTROLLER://0.0.0.0:9093
+
+      KAFKA_ADVERTISED_LISTENERS: >
+        INTERNAL://broker1:29092,
+        EXTERNAL://localhost:9092
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: >
+        INTERNAL:PLAINTEXT,
+        EXTERNAL:PLAINTEXT,
+        CONTROLLER:PLAINTEXT
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # KRaft quorum
+      KAFKA_CONTROLLER_QUORUM_VOTERS: >
+        1@broker1:9093,
+        2@broker2:9095
+
+      # Storage
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      # Safer defaults
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+  broker2:
+    image: apache/kafka:4.1.0
+    container_name: kafka-broker2
+    hostname: broker2
+    ports:
+      - "9094:9094"
+    volumes:
+      - broker2-data:/var/lib/kafka/data
+    environment:
+      KAFKA_NODE_ID: 2
+      KAFKA_PROCESS_ROLES: broker,controller
+
+      KAFKA_LISTENERS: >
+        INTERNAL://0.0.0.0:29094,
+        EXTERNAL://0.0.0.0:9094,
+        CONTROLLER://0.0.0.0:9095
+
+      KAFKA_ADVERTISED_LISTENERS: >
+        INTERNAL://broker2:29094,
+        EXTERNAL://localhost:9094
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: >
+        INTERNAL:PLAINTEXT,
+        EXTERNAL:PLAINTEXT,
+        CONTROLLER:PLAINTEXT
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      KAFKA_CONTROLLER_QUORUM_VOTERS: >
+        1@broker1:9093,
+        2@broker2:9095
+
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+  kafdrop1:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop1
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: broker2:29094
+    depends_on:
+      - broker1
+      - broker2
+
+volumes:
+  broker1-data:
+  broker2-data:
