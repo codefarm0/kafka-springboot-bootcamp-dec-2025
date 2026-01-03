@@ -3,13 +3,13 @@ package in.codefarm.notification.service.as.consumer.event;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record OrderPlacedEvent(
+public record PaymentProcessedEvent(
+    String paymentId,
     String orderId,
     String customerId,
-    String productId,
-    Integer quantity,
-    BigDecimal totalAmount,
-    LocalDateTime orderDate,
+    BigDecimal amount,
+    String status,
+    LocalDateTime processedAt,
     String transactionId
 ) {
 }

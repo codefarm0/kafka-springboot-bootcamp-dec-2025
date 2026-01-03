@@ -9,7 +9,8 @@ public record OrderPlacedEvent(
     String productId,
     Integer quantity,
     BigDecimal totalAmount,
-    LocalDateTime orderDate
+    LocalDateTime orderDate,
+    String transactionId
 ) {
 }
 

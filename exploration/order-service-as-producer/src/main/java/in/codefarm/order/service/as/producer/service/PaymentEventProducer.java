@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class PaymentEventProducer {
@@ -97,7 +98,15 @@ public class PaymentEventProducer {
             log.debug("Payment event sent - PaymentId: {}, TransactionId: {}, Partition: {}", 
                 paymentEvent.paymentId(), transactionId, result.getRecordMetadata().partition());
         });
-        
+
+        try {
+            paymentFuture.get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
         // Create order event
         var orderEvent = new OrderPlacedEvent(
             orderId,

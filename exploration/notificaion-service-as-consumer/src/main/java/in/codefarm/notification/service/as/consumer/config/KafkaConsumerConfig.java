@@ -138,8 +138,11 @@ public class KafkaConsumerConfig {
         
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.springframework.kafka.support.serialization.JsonDeserializer");
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
         configProps.put("spring.json.trusted.packages", "*");
+        configProps.put("spring.json.use.type.headers", false);
+        configProps.put("spring.json.value.default.type","in.codefarm.notification.service.as.consumer.event.PaymentProcessedEvent");
+
         configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         configProps.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 30000);
         configProps.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, 3000);
@@ -148,6 +151,7 @@ public class KafkaConsumerConfig {
         configProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
         configProps.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "notification-service-payment-group");
+        configProps.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         
         return new DefaultKafkaConsumerFactory<>(configProps);
     }

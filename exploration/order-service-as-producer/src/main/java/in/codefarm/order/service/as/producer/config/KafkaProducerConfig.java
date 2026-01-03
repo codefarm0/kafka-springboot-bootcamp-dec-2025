@@ -102,6 +102,7 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
         configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);
         configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "tx-order-service-");
+          configProps.put("spring.json.add.type.headers", false);
         
         return new DefaultKafkaProducerFactory<>(configProps);
     }
@@ -131,6 +132,7 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
         configProps.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 30000);
         configProps.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, 120000);
+        configProps.put("spring.json.add.type.headers", false);
         // NOTE: NO TRANSACTIONAL_ID_CONFIG - this makes it non-transactional
         
         return new DefaultKafkaProducerFactory<>(configProps);

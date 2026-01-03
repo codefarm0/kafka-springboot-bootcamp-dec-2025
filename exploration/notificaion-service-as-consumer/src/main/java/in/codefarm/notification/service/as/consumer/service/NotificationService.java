@@ -54,7 +54,7 @@ public class NotificationService {
         return saved;
     }
     
-    public void sendEmailNotification(OrderPlacedEvent event) throws OrderIsInvalid {
+    public void sendEmailNotification(OrderPlacedEvent event)  {
         log.info("Sending email notification to customer: {}", event.customerId());
         log.info("Email: Your order {} for ${} has been placed successfully!", 
             event.orderId(), 

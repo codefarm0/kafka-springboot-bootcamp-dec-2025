@@ -92,29 +92,29 @@ public class NotificationController {
             .orElse(ResponseEntity.notFound().build());
     }
     
-    @GetMapping("/inconsistencies")
-    public ResponseEntity<InconsistencyResponse> detectInconsistencies() {
-        var inconsistencies = notificationService.detectInconsistencies();
-        var details = inconsistencies.stream()
-            .map(inc -> new InconsistencyResponse.InconsistencyDetail(
-                (String) inc.get("type"),
-                inc.get("paymentId") != null ? (String) inc.get("paymentId") : null,
-                (String) inc.get("orderId"),
-                (String) inc.get("customerId"),
-                (String) inc.get("issue")
-            ))
-            .toList();
-        
-        var message = inconsistencies.isEmpty() 
-            ? "No inconsistencies found - all payments have corresponding orders" 
-            : "Found " + inconsistencies.size() + " inconsistency(ies)";
-        
-        return ResponseEntity.ok(new InconsistencyResponse(
-            inconsistencies.size(),
-            details,
-            message
-        ));
-    }
+//    @GetMapping("/inconsistencies")
+//    public ResponseEntity<InconsistencyResponse> detectInconsistencies() {
+//        var inconsistencies = notificationService.detectInconsistencies();
+//        var details = inconsistencies.stream()
+//            .map(inc -> new InconsistencyResponse.InconsistencyDetail(
+//                (String) inc.get("type"),
+//                inc.get("paymentId") != null ? (String) inc.get("paymentId") : null,
+//                (String) inc.get("orderId"),
+//                (String) inc.get("customerId"),
+//                (String) inc.get("issue")
+//            ))
+//            .toList();
+//
+//        var message = inconsistencies.isEmpty()
+//            ? "No inconsistencies found - all payments have corresponding orders"
+//            : "Found " + inconsistencies.size() + " inconsistency(ies)";
+//
+//        return ResponseEntity.ok(new InconsistencyResponse(
+//            inconsistencies.size(),
+//            details,
+//            message
+//        ));
+//    }
     
     @GetMapping("/consistency/order/{orderId}")
     public ResponseEntity<ConsistencyCheckResponse> checkOrderConsistency(@PathVariable String orderId) {

@@ -22,7 +22,9 @@ public class PaymentEntity {
     private String transactionId;
     
     // Consumer metadata
+    @Column(name = "kafka_partition")
     private Integer partition;
+    @Column(name = "kafka_offset")
     private Long offset;
     private String consumerGroup;
     

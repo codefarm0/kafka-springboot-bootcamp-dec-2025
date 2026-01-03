@@ -44,7 +44,8 @@ public class OrderController {
             request.productId(),
             request.quantity(),
             request.totalAmount(),
-            LocalDateTime.now()
+            LocalDateTime.now(),
+                UUID.randomUUID().toString()
         );
     }
     
