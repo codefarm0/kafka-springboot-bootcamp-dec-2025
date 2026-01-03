@@ -2,6 +2,8 @@
 
 This project demonstrates the Saga Pattern using Kafka event choreography for distributed transaction coordination.
 
+Get the deep dive details about SAGA pattern here - [Saga Pattern and Event Choreography](https://codefarm0.medium.com/saga-pattern-and-event-choreography-day-10-0b3d88fe8b02)
+
 ## Architecture
 
 The saga flow:
