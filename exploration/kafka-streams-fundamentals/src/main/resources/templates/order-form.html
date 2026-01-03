@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - Kafka Streams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #5568d3;
+        }
+        
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-bulk {
+            background: #10b981;
+            margin-top: 10px;
+        }
+        
+        .btn-bulk:hover {
+            background: #059669;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        
+        .bulk-simulation {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+        }
+        
+        .bulk-simulation h3 {
+            color: #374151;
+            margin-bottom: 15px;
+        }
+        
+        .bulk-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .bulk-controls input {
+            width: 100px;
+            padding: 8px;
+            border: 2px solid #e5e7eb;
+            border-radius: 5px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Place Order</h1>
+            <div class="nav-links">
+                <a href="/dashboard">Dashboard</a>
+                <a href="/dashboard/order-form">Place Order</a>
+            </div>
+        </div>
+        
+        <div class="form-card">
+            <div id="message" class="message"></div>
+            
+            <form id="orderForm" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label for="customerId">Customer ID *</label>
+                    <input type="text" id="customerId" name="customerId" required 
+                           placeholder="e.g., customer-123" value="customer-123">
+                </div>
+                
+                <div class="form-group">
+                    <label for="productId">Product ID *</label>
+                    <input type="text" id="productId" name="productId" required 
+                           placeholder="e.g., product-456" value="product-456">
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantity *</label>
+                    <input type="number" id="quantity" name="quantity" required 
+                           min="1" value="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="totalAmount">Total Amount (₹) *</label>
+                    <input type="number" id="totalAmount" name="totalAmount" required 
+                           step="0.01" min="0.01" placeholder="99.99" value="99.99">
+                </div>
+                
+                <button type="submit" class="btn">Place Order</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+            </form>
+            
+            <div class="bulk-simulation">
+                <h3>📊 Bulk Order Simulation</h3>
+                <p style="color: #6b7280; margin-bottom: 15px;">
+                    Simulate multiple orders to test analytics and stream processing
+                </p>
+                <div class="bulk-controls">
+                    <label>
+                        Customer ID:
+                        <input type="text" id="bulkCustomerId" value="customer-123" placeholder="customer-123">
+                    </label>
+                    <label>
+                        Orders:
+                        <input type="number" id="bulkCount" value="10" min="1" max="100">
+                    </label>
+                    <label>
+                        Min Amount:
+                        <input type="number" id="bulkMinAmount" value="10" step="0.01" min="0.01">
+                    </label>
+                    <label>
+                        Max Amount:
+                        <input type="number" id="bulkMaxAmount" value="500" step="0.01" min="0.01">
+                    </label>
+                    <label>
+                        Delay (ms):
+                        <input type="number" id="bulkDelay" value="500" min="0">
+                    </label>
+                    <button type="button" class="btn btn-bulk" onclick="simulateBulkOrders()">
+                        🚀 Start Simulation
+                    </button>
+                </div>
+                <div id="loading" class="loading">Processing orders...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = 'message ' + type;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        async function submitOrder(event) {
+            event.preventDefault();
+            
+            const formData = {
+                customerId: document.getElementById('customerId').value,
+                productId: document.getElementById('productId').value,
+                quantity: parseInt(document.getElementById('quantity').value),
+                totalAmount: parseFloat(document.getElementById('totalAmount').value)
+            };
+            
+            try {
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showMessage(`Order placed successfully! Order ID: ${result.orderId}`, 'success');
+                    // Reset form after successful submission
+                    setTimeout(() => {
+                        document.getElementById('orderForm').reset();
+                        document.getElementById('customerId').value = 'customer-123';
+                        document.getElementById('productId').value = 'product-456';
+                    }, 1000);
+                } else {
+                    showMessage(`Error: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function resetForm() {
+            document.getElementById('orderForm').reset();
+            document.getElementById('customerId').value = 'customer-123';
+            document.getElementById('productId').value = 'product-456';
+        }
+        
+        async function simulateBulkOrders() {
+            const customerId = document.getElementById('bulkCustomerId').value || 'customer-123';
+            const count = parseInt(document.getElementById('bulkCount').value) || 10;
+            const minAmount = parseFloat(document.getElementById('bulkMinAmount').value) || 10;
+            const maxAmount = parseFloat(document.getElementById('bulkMaxAmount').value) || 500;
+            const delay = parseInt(document.getElementById('bulkDelay').value) || 500;
+            
+            if (minAmount >= maxAmount) {
+                showMessage('Min amount must be less than max amount', 'error');
+                return;
+            }
+            
+            const loadingDiv = document.getElementById('loading');
+            loadingDiv.style.display = 'block';
+            
+            let successCount = 0;
+            let errorCount = 0;
+            
+            for (let i = 0; i < count; i++) {
+                const amount = (Math.random() * (maxAmount - minAmount) + minAmount).toFixed(2);
+                const quantity = Math.floor(Math.random() * 5) + 1;
+                
+                const orderData = {
+                    customerId: customerId,
+                    productId: `product-${Math.floor(Math.random() * 1000)}`,
+                    quantity: quantity,
+                    totalAmount: parseFloat(amount)
+                };
+                
+                try {
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(orderData)
+                    });
+                    
+                    if (response.ok) {
+                        successCount++;
+                    } else {
+                        errorCount++;
+                    }
+                } catch (error) {
+                    errorCount++;
+                }
+                
+                // Delay between orders
+                if (i < count - 1) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            
+            loadingDiv.style.display = 'none';
+            showMessage(
+                `Simulation complete! ${successCount} successful, ${errorCount} failed`,
+                successCount > 0 ? 'success' : 'error'
+            );
+        }
+    </script>
+</body>
+</html>
+
