@@ -1,0 +1,37 @@
+{
+  "type": "record",
+  "name": "OrderPlacedEvent",
+  "namespace": "in.codefarm.schema.avro.event",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "productId",
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "type": "int"
+    },
+    {
+      "name": "totalAmount",
+      "type": "double"
+    },
+    {
+      "name": "orderDate",
+      "type": "string"
+    },
+    {
+      "name": "discount",
+      "type": ["null", "double"],
+      "default": null
+    }
+  ]
+}
+
