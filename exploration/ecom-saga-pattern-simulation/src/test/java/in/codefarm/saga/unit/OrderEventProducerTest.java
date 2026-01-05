@@ -3,7 +3,7 @@ package in.codefarm.saga.unit;
 import in.codefarm.saga.event.EventWrapper;
 import in.codefarm.saga.event.OrderPlacedEvent;
 import in.codefarm.saga.order.service.OrderEventProducer;
-import in.codefarm.saga.testutil.TestEventBuilder;
+import in.codefarm.saga.util.TestEventBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
-import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 
 import static org.assertj.core.api.Assertions.assertThat;

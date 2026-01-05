@@ -1,4 +1,4 @@
-package in.codefarm.saga.testutil;
+package in.codefarm.saga.util;
 
 import in.codefarm.saga.event.*;
 import tools.jackson.databind.json.JsonMapper;

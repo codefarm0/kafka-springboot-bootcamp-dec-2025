@@ -4,7 +4,7 @@ import in.codefarm.saga.event.EventWrapper;
 import in.codefarm.saga.event.PaymentProcessedEvent;
 import in.codefarm.saga.event.PaymentRefundedEvent;
 import in.codefarm.saga.payment.service.PaymentEventProducer;
-import in.codefarm.saga.testutil.TestEventBuilder;
+import in.codefarm.saga.util.TestEventBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

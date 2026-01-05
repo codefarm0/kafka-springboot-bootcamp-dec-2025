@@ -8,7 +8,7 @@ import in.codefarm.saga.order.service.OrderEventProducer;
 import in.codefarm.saga.order.service.OrderService;
 import in.codefarm.saga.payment.repository.PaymentRepository;
 import in.codefarm.saga.payment.service.PaymentService;
-import in.codefarm.saga.testutil.TestEventBuilder;
+import in.codefarm.saga.util.TestEventBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
