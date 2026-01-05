@@ -1,6 +1,7 @@
 # Schema Registry and Avro Demo
 
 This project demonstrates Schema Registry and Avro serialization with Kafka, including schema evolution and compatibility rules.
+**Get the deep dive story here** - [Schema Registry + Avro + Versioning ](https://codefarm0.medium.com/schema-registry-avro-versioning-day-13-4a4b7fe8700c) 
 
 ## Overview
 
