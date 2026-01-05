@@ -37,12 +37,13 @@ public class OrderEventConsumer {
         groupId = "order-avro-consumer-group"
     )
     public void consume(OrderPlacedEvent event) {
-        log.info("Received OrderPlacedEvent (Avro) - OrderId: {}, CustomerId: {}, ProductId: {}, Quantity: {}, Amount: {}, Date: {}", 
+        log.info("Received OrderPlacedEvent (Avro) - OrderId: {}, CustomerId: {}, ProductId: {}, Quantity: {}, Amount: {}, Discount: {}, Date: {}",
             event.getOrderId(),
             event.getCustomerId(),
             event.getProductId(),
             event.getQuantity(),
             event.getTotalAmount(),
+                event.getDiscount(),
             event.getOrderDate());
         
         // Process the order event

@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d473792-ebc4-41f5-b157-e103397cc37b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/ConsistencyCheckResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/dto/ConsistencyCheckResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/InconsistencyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/dto/InconsistencyResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/PaymentEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/config/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/config/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/consumer/NotificationServiceConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/consumer/NotificationServiceConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/controller/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/entity/PaymentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/entity/PaymentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/event/OrderPlacedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/event/OrderPlacedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/java/in/codefarm/notification/service/as/consumer/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../notificaion-service-as-consumer/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/config/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/config/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/event/OrderPlacedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/event/OrderPlacedEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/service/PaymentEventProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service-as-producer/src/main/java/in/codefarm/order/service/as/producer/service/PaymentEventProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/consumer/OrderEventConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/consumer/OrderEventConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/controller/OrderController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,40 +24,48 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "codefarm0"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;codefarm0&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/codefarm0/kafka-springboot-bootcamp-dec-2025.git",
-    "accountId": "d41ef0b9-166e-450f-8a93-7afa9d1fc4a7"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/codefarm0/kafka-springboot-bootcamp-dec-2025.git&quot;,
+    &quot;accountId&quot;: &quot;d41ef0b9-166e-450f-8a93-7afa9d1fc4a7&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="37huGwgHZup2BXgndyMk8Y5hMtT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.ecom-saga-pattern-simulation [:in.codefarm.saga.EcomSagaPatternSimulationApplication.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/codefarm/Projects/github/kafka-springboot-bootcamp-dec-2025/exploration/ecom-saga-pattern-simulation",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.ecom-saga-pattern-simulation [:in.codefarm.saga.EcomSagaPatternSimulationApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/codefarm/Projects/github/kafka-springboot-bootcamp-dec-2025/exploration/ecom-saga-pattern-simulation&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="EcomSagaPatternSimulationApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="in.codefarm.saga.EcomSagaPatternSimulationApplication" />

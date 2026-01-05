@@ -56,7 +56,7 @@ public class OrderController {
                 .setQuantity(request.quantity())
                 .setTotalAmount(request.totalAmount())
                 .setOrderDate(LocalDateTime.now().toString())
-                .setDiscount(null)  // Optional field, defaults to null
+//                .setDiscount(null)  // Optional field, defaults to null
                 .build();
             
             // Send Avro-serialized event
