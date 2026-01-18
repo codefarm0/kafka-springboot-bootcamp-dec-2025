@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Order Service - Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .nav a:hover {
+            background: #3d8bfe;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            opacity: 0.9;
+        }
+        .stat-card.pending { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .stat-card.confirmed { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .stat-card.cancelled { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+        .status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status.PENDING { background: #fff3cd; color: #856404; }
+        .status.CONFIRMED { background: #d1ecf1; color: #0c5460; }
+        .status.CANCELLED { background: #f8d7da; color: #721c24; }
+        .btn {
+            padding: 6px 12px;
+            background: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #3d8bfe;
+        }
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3c3;
+        }
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .refresh-btn {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Order Dashboard</h1>
+        <p class="subtitle">View all orders and their status</p>
+        
+        <div class="nav">
+            <a href="/">Place Order</a>
+            <a href="/batch">Batch Orders</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/products" style="background: #28a745;">Manage Products</a>
+        </div>
+        
+        <div th:if="${success}" class="success" th:text="${success}"></div>
+        
+        <div class="refresh-btn">
+            <a href="/dashboard" class="btn">🔄 Refresh</a>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3 th:text="${totalOrders}">0</h3>
+                <p>Total Orders</p>
+            </div>
+            <div class="stat-card pending">
+                <h3 th:text="${pendingCount}">0</h3>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card confirmed">
+                <h3 th:text="${confirmedCount}">0</h3>
+                <p>Confirmed</p>
+            </div>
+            <div class="stat-card cancelled">
+                <h3 th:text="${cancelledCount}">0</h3>
+                <p>Cancelled</p>
+            </div>
+        </div>
+        
+        <div th:if="${orders.isEmpty()}" class="empty">
+            <h2>No orders yet</h2>
+            <p>Start by placing an order!</p>
+        </div>
+        
+        <table th:if="${!orders.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer ID</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Items</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}">order-123</td>
+                    <td th:text="${order.customerId}">customer-123</td>
+                    <td th:text="${'$' + #numbers.formatDecimal(order.totalAmount, 1, 2)}">$99.99</td>
+                    <td>
+                        <span class="status" th:classappend="${'status.' + order.status}" 
+                              th:text="${order.status}">PENDING</span>
+                    </td>
+                    <td th:text="${order.items.size()}">2</td>
+                    <td th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 12:00</td>
+                    <td>
+                        <a th:href="@{/orders/{id}(id=${order.id})}" class="btn">View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

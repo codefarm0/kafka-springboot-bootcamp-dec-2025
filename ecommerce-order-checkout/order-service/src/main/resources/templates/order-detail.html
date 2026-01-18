@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .nav a:hover {
+            background: #5568d3;
+        }
+        .order-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .info-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #666;
+        }
+        .status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status.PENDING { background: #fff3cd; color: #856404; }
+        .status.CONFIRMED { background: #d1ecf1; color: #0c5460; }
+        .status.CANCELLED { background: #f8d7da; color: #721c24; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Details</h1>
+        
+        <div class="nav">
+            <a href="/">Place Order</a>
+            <a href="/batch">Batch Orders</a>
+            <a href="/dashboard">Dashboard</a>
+        </div>
+        
+        <div class="order-info" th:if="${order}">
+            <div class="info-row">
+                <span class="info-label">Order ID:</span>
+                <span th:text="${order.id}">order-123</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Customer ID:</span>
+                <span th:text="${order.customerId}">customer-123</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Status:</span>
+                <span class="status" th:classappend="${'status.' + order.status}" 
+                      th:text="${order.status}">PENDING</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Shipping Address:</span>
+                <span th:text="${order.shippingAddress ?: 'N/A'}">123 Main St</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Created At:</span>
+                <span th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-01-01 12:00:00</span>
+            </div>
+        </div>
+        
+        <h2 style="margin-top: 30px; margin-bottom: 10px;">Order Items</h2>
+        <table th:if="${order}">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${order.items}">
+                    <td th:text="${item.productId}">product-1</td>
+                    <td th:text="${item.productName}">Sample Product</td>
+                    <td th:text="${item.quantity}">2</td>
+                    <td th:text="${'$' + #numbers.formatDecimal(item.unitPrice, 1, 2)}">$29.99</td>
+                    <td th:text="${'$' + #numbers.formatDecimal(item.totalPrice, 1, 2)}">$59.98</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="total" th:if="${order}">
+            Total Amount: <span th:text="${'$' + #numbers.formatDecimal(order.totalAmount, 1, 2)}">$99.99</span>
+        </div>
+    </div>
+</body>
+</html>
+

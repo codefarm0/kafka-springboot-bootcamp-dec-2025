@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="4d473792-ebc4-41f5-b157-e103397cc37b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/gradlew" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/consumer/OrderEventConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/consumer/OrderEventConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../schema-registry-avro-demo/src/main/java/in/codefarm/schema/avro/controller/OrderController.java" afterDir="false" />
+=======
+    <list default="true" id="4d473792-ebc4-41f5-b157-e103397cc37b" name="Changes" comment="fixing execution setup and packages">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +28,29 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ecom-saga-pattern-simulation" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="adding-test-and-coverage" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -47,6 +76,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Gradle.ecom-saga-pattern-simulation [:in.codefarm.saga.EcomSagaPatternSimulationApplication.main()].executor&quot;: &quot;Run&quot;,
@@ -67,6 +97,34 @@
     </key>
   </component>
   <component name="RunManager">
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.OrderEventProducerTest.executor": "Coverage",
+    "Gradle.SagaPatternIntegrationTest.executor": "Run",
+    "Gradle.Tests in 'ecom-saga-pattern-simulation.test'.executor": "Coverage",
+    "Gradle.ecom-saga-pattern-simulation [:in.codefarm.saga.EcomSagaPatternSimulationApplication.main()].executor": "Run",
+    "Gradle.ecom-saga-pattern-simulation [jacocoTestReport].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#1 on adding-test-and-coverage",
+    "last_directory_selection": "/Users/codefarm/Projects/github/kafka-springboot-bootcamp-dec-2025/exploration/ecom-saga-pattern-simulation/src/test/java/in/codefarm/saga",
+    "last_opened_file_path": "/Users/codefarm/Projects/github/kafka-springboot-bootcamp-dec-2025/exploration/ecom-saga-pattern-simulation",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java/in/codefarm/saga/unit" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.ecom-saga-pattern-simulation [jacocoTestReport]">
+>>>>>>> Stashed changes
     <configuration name="EcomSagaPatternSimulationApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="in.codefarm.saga.EcomSagaPatternSimulationApplication" />
       <module name="ecom-saga-pattern-simulation.main" />
@@ -80,6 +138,98 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="OrderEventProducerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;in.codefarm.saga.unit.OrderEventProducerTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="SagaPatternIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;in.codefarm.saga.integration.SagaPatternIntegrationTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'ecom-saga-pattern-simulation.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ecom-saga-pattern-simulation [jacocoTestReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jacocoTestReport" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -91,6 +241,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ecom-saga-pattern-simulation [jacocoTestReport]" />
+        <item itemvalue="Gradle.Tests in 'ecom-saga-pattern-simulation.test'" />
+        <item itemvalue="Gradle.OrderEventProducerTest" />
+        <item itemvalue="Gradle.SagaPatternIntegrationTest" />
         <item itemvalue="Application.EcomSagaPatternSimulationApplication" />
       </list>
     </recent_temporary>
@@ -103,6 +257,23 @@
       <option name="presentableId" value="Default" />
       <updated>1767367531743</updated>
     </task>
+    <task id="LOCAL-00001" summary="fixing execution setup and packages">
+      <option name="closed" value="true" />
+      <created>1767628062414</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1767628062414</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixing execution setup and packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixing execution setup and packages" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ecom_saga_pattern_simulation$OrderEventProducerTest.ic" NAME="OrderEventProducerTest Coverage Results" MODIFIED="1767631916820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/ecom_saga_pattern_simulation$Tests_in__ecom_saga_pattern_simulation_test_.ic" NAME="Tests in 'ecom-saga-pattern-simulation.test' Coverage Results" MODIFIED="1767632023205" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

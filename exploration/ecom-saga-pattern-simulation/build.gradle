@@ -27,6 +27,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+<<<<<<< Updated upstream
+=======
+
+	testImplementation 'org.awaitility:awaitility:4.2.0'
+	testImplementation 'org.assertj:assertj-core:3.24.2'
+
+>>>>>>> Stashed changes
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -34,3 +41,39 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+<<<<<<< Updated upstream
+=======
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+		csv.required = false
+	}
+	
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+				'**/config/**',
+				'**/event/**',
+				'**/dto/**',
+				'**/entity/**',
+				'**/EcomSagaPatternSimulationApplication.class'
+			])
+		}))
+	}
+}
+
+jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.70
+			}
+		}
+	}
+}
+
+///build >> compile >> test >> runs server >> intergration >> bugifingde >> static analysis >> secuirty >> coverage >>>
+>>>>>>> Stashed changes

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: payment-service
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3307/payment_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: rootpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+  
+  # Kafka Configuration (minimal - detailed config in KafkaConfig.java)
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: payment-service-group
+
+# Server Configuration
+server:
+  port: 8081
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    in.codefarm.payment_service: DEBUG
+    org.springframework.kafka: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+

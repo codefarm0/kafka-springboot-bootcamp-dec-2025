@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Order Service - Place Order</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .nav a:hover {
+            background: #5568d3;
+        }
+        .nav a.btn-success {
+            background: #28a745;
+        }
+        .nav a.btn-success:hover {
+            background: #218838;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .items-container {
+            border: 2px dashed #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: end;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c33;
+        }
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3c3;
+        }
+        .quick-add {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .quick-add-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .quick-add-btn:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Place Order</h1>
+        <p class="subtitle">Create a new order in the e-commerce system</p>
+        
+        <div class="nav">
+            <a href="/">Place Order</a>
+            <a href="/batch">Batch Orders</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/products" class="btn-success">Manage Products</a>
+        </div>
+        
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <div th:if="${success}" class="success" th:text="${success}"></div>
+        
+        <form th:action="@{/orders}" th:object="${orderRequest}" method="post">
+            <div class="form-group">
+                <label for="customerId">Customer ID *</label>
+                <input type="text" id="customerId" th:field="*{customerId}" required 
+                       placeholder="e.g., customer-123">
+            </div>
+            
+            <div class="form-group">
+                <label>Order Items *</label>
+                <div class="items-container" id="itemsContainer">
+                    <div class="item-row">
+                        <div>
+                            <label>Product ID</label>
+                            <input type="text" name="items[0].productId" required 
+                                   placeholder="e.g., product-1">
+                        </div>
+                        <div>
+                            <label>Product Name</label>
+                            <input type="text" name="items[0].productName" required 
+                                   placeholder="e.g., Sample Product">
+                        </div>
+                        <div>
+                            <label>Quantity</label>
+                            <input type="number" name="items[0].quantity" min="1" required value="1">
+                        </div>
+                        <div>
+                            <label>Unit Price</label>
+                            <input type="number" name="items[0].unitPrice" step="0.01" min="0" required 
+                                   placeholder="29.99">
+                        </div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                
+                <div class="quick-add">
+                    <strong>Quick Add:</strong>
+                    <span th:each="product : ${sampleProducts}">
+                        <button type="button" class="quick-add-btn" 
+                                th:data-product-id="${product.productId}"
+                                th:data-product-name="${product.productName}"
+                                th:data-product-price="${product.price}"
+                                th:text="${product.productName} + ' ($' + ${product.price} + ')'"></button>
+                    </span>
+                </div>
+                
+                <button type="button" class="btn btn-secondary" onclick="addItemRow()">+ Add Item</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="shippingAddress">Shipping Address</label>
+                <textarea id="shippingAddress" th:field="*{shippingAddress}" rows="3" 
+                          placeholder="123 Main St, City, State, ZIP"></textarea>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn">Place Order</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        let itemIndex = 1;
+        
+        // Handle quick-add button clicks using data attributes
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.quick-add-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name');
+                    const price = parseFloat(this.getAttribute('data-product-price'));
+                    addProduct(productId, productName, price);
+                });
+            });
+        });
+        
+        function addItemRow() {
+            const container = document.getElementById('itemsContainer');
+            const row = document.createElement('div');
+            row.className = 'item-row';
+            row.innerHTML = `
+                <div>
+                    <label>Product ID</label>
+                    <input type="text" name="items[${itemIndex}].productId" required>
+                </div>
+                <div>
+                    <label>Product Name</label>
+                    <input type="text" name="items[${itemIndex}].productName" required>
+                </div>
+                <div>
+                    <label>Quantity</label>
+                    <input type="number" name="items[${itemIndex}].quantity" min="1" required value="1">
+                </div>
+                <div>
+                    <label>Unit Price</label>
+                    <input type="number" name="items[${itemIndex}].unitPrice" step="0.01" min="0" required>
+                </div>
+                <div></div>
+                <div>
+                    <button type="button" class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+            `;
+            container.appendChild(row);
+            itemIndex++;
+        }
+        
+        function addProduct(productId, productName, price) {
+            const container = document.getElementById('itemsContainer');
+            const row = document.createElement('div');
+            row.className = 'item-row';
+            row.innerHTML = `
+                <div>
+                    <label>Product ID</label>
+                    <input type="text" name="items[${itemIndex}].productId" required value="${productId}">
+                </div>
+                <div>
+                    <label>Product Name</label>
+                    <input type="text" name="items[${itemIndex}].productName" required value="${productName}">
+                </div>
+                <div>
+                    <label>Quantity</label>
+                    <input type="number" name="items[${itemIndex}].quantity" min="1" required value="1">
+                </div>
+                <div>
+                    <label>Unit Price</label>
+                    <input type="number" name="items[${itemIndex}].unitPrice" step="0.01" min="0" required value="${price}">
+                </div>
+                <div></div>
+                <div>
+                    <button type="button" class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+            `;
+            container.appendChild(row);
+            itemIndex++;
+        }
+    </script>
+</body>
+</html>
+

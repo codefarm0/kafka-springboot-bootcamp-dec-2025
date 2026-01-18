@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Order Service</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .nav a:hover {
+            background: #5568d3;
+        }
+        .nav a.btn-secondary {
+            background: #6c757d;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .required {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Product to Inventory</h1>
+        <div class="nav">
+            <a href="/">Place Order</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/products" class="btn-secondary">Products</a>
+        </div>
+        
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        
+        <form th:action="@{/products/add}" th:object="${productRequest}" method="post">
+            <div class="form-group">
+                <label for="productId">Product ID <span class="required">*</span></label>
+                <input type="text" id="productId" th:field="*{productId}" required 
+                       placeholder="e.g., product-1">
+            </div>
+            
+            <div class="form-group">
+                <label for="productName">Product Name <span class="required">*</span></label>
+                <input type="text" id="productName" th:field="*{productName}" required 
+                       placeholder="e.g., Sample Product">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" th:field="*{description}" rows="3" 
+                          placeholder="Product description (optional)"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">Price <span class="required">*</span></label>
+                <input type="number" id="price" th:field="*{price}" step="0.01" min="0" required 
+                       placeholder="29.99">
+            </div>
+            
+            <div class="form-group">
+                <label for="quantity">Initial Quantity <span class="required">*</span></label>
+                <input type="number" id="quantity" th:field="*{quantity}" min="1" required 
+                       placeholder="100" value="100">
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn">Add Product</button>
+                <a href="/products" class="btn btn-secondary" style="text-decoration: none; display: inline-block; text-align: center;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
